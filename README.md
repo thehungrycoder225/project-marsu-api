@@ -60,6 +60,7 @@ Authorization: Bearer YOUR_API_KEY
 ```
 
 ## Endpoints
+### Base endpoint: /api/v1/
 
 ### Campuses
 
@@ -87,12 +88,20 @@ Authorization: Bearer YOUR_API_KEY
 
 ### Faculty
 
-- **GET /faculty**: Retrieve a list of all faculty members.
-- **GET /faculty/{id}**: Retrieve details of a specific faculty member.
-- **POST /faculty**: Create a new faculty member.
-- **PUT /faculty/{id}**: Update an existing faculty member.
-- **DELETE /faculty/{id}**: Delete a faculty member.
+- **GET /faculties**: Retrieve a list of all faculty members.
+- **GET /faculties/{id}**: Retrieve details of a specific faculty member.
+- **POST /faculties**: Create a new faculty member.
+- **PUT /faculties/{id}**: Update an existing faculty member.
+- **DELETE /faculties/{id}**: Delete a faculty member.
 
+### Colleges
+
+- **GET /colleges**: Retrieve a list of all college .
+- **GET /colleges/{slug}**: Retrieve details of a specific college.
+- **POST /colleges**: Create a new college member.
+- **PUT /colleges/{id}**: Update an existing college .
+- **DELETE /colleges/{id}**: Delete a college .
+  
 ## Error Handling
 
 The API uses standard HTTP status codes to indicate the success or failure of a request. Common status codes include:
