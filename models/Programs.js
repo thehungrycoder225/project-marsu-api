@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const ProgramSchema = new mongoose.Schema({
   name: { type: String, required: true },
+  slug: { type: String, required: true, unique: true },
   college: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'College',
