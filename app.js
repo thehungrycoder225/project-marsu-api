@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const PORT = 3000;
 const collegeRouter = require('./routes/collegeRouter');
 const facultyRouter = require('./routes/facultyRouter');
-const programRouter = require('./routes/programRouter');
+const courseRouter = require('./routes/courseRouter');
 
 app.use(express.json());
 const uri =
@@ -17,7 +17,7 @@ mongoose.connect(uri, {
 
 app.use('/api/v1/colleges', collegeRouter);
 app.use('/api/v1/faculties', facultyRouter);
-app.use('/api/v1/programs', programRouter);
+app.use('/api/v1/courses', courseRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
