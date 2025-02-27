@@ -13,7 +13,7 @@ const FacultySchema = new mongoose.Schema({
 
 FacultySchema.pre('save', async function (next) {
   const faculty = this;
-  const College = require('./College');
+  const College = require('./Colleges');
   const college = await College.findById(faculty.college);
   if (!college) {
     throw new Error('College not found');

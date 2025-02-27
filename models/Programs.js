@@ -4,7 +4,7 @@ const ProgramSchema = new mongoose.Schema({
   name: { type: String, required: true },
   college: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'College',
+    ref: 'Colleges',
     required: true,
   },
   curriculum: [

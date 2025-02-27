@@ -1,21 +1,20 @@
+require('dotenv').config();
+
 const express = require('express');
 const app = express();
-const mongoose = require('mongoose');
-const PORT = 3000;
+const PORT = process.env.PORT || 8080;
 const collegeRouter = require('./routes/collegeRouter');
 const facultyRouter = require('./routes/facultyRouter');
+const userRouter = require('./routes/userRouter');
+const connectDB = require('./config/db');
 
+connectDB();
 app.use(express.json());
-const uri =
-  'mongodb+srv://govillidane:it6Gbh13gko9ZF10@cluster0.76wqc.mongodb.net/project-marsu-db';
-
-mongoose.connect(uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/v1/colleges', collegeRouter);
 app.use('/api/v1/faculties', facultyRouter);
+app.use('/api/v1/users', userRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

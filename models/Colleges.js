@@ -2,15 +2,15 @@ const mongoose = require('mongoose');
 
 const CollegeSchema = new mongoose.Schema({
   name: { type: String, required: true, unique: true },
-  slug: { type: String, required: true, unique: true },
-  about: {
-    history: String,
-    mission: String,
-    vision: String,
-  },
-  programs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Program' }],
-  faculty: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Faculty' }],
-  contact: String,
+  slug: { type: String, unique: true },
+  description: { type: String },
+  programs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'programs' }],
+  faculty: [{ type: mongoose.Schema.Types.ObjectId, ref: 'faculties' }],
+  users: [{ type: mongoose.Schema.Types.ObjectId, ref: 'users' }],
+  articles: [{ type: mongoose.Schema.Types.ObjectId, ref: 'articles' }],
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
+  deletedAt: { type: Date, default: null },
 });
 
 CollegeSchema.pre('save', function (next) {

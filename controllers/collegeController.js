@@ -1,4 +1,4 @@
-const College = require('../models/College');
+const College = require('../models/Colleges');
 
 // Get all colleges
 exports.getAllColleges = async (req, res) => {
@@ -43,19 +43,17 @@ exports.getCollegeFaculty = async (req, res) => {
 
 // Create a new college
 exports.createCollege = async (req, res) => {
-  const { name, slug, about } = req.body;
+  const { name } = req.body || {};
   try {
-    const college = await College.create({ name, slug, about });
-    //  if college already exists
-
-    if (!college) {
+    const existingCollege = await College.findOne({ name });
+    if (existingCollege) {
       return res.status(400).json({ message: 'College already exists' });
-    } else {
-      return res.status(201).json({
-        message: 'College created successfully',
-        college,
-      });
     }
+    const college = await College.create({ name });
+    return res.status(201).json({
+      message: 'College created successfully',
+      college,
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

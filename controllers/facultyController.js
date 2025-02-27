@@ -1,5 +1,5 @@
-const Faculty = require('../models/Faculty');
-const College = require('../models/College');
+const Faculty = require('../models/Faculties');
+const College = require('../models/Colleges');
 
 // Get all faculties using college slug
 exports.getAllFacultiesByCollegeSlug = async (req, res) => {
