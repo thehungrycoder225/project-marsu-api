@@ -1,4 +1,6 @@
 const Article = require('../models/Articles');
+const College = require('../models/Colleges');
+const Author = require('../models/Users');
 
 // Helper function to handle errors
 const handleError = (res, error, message = 'Internal server error') => {
@@ -96,20 +98,48 @@ exports.getArticlesByAuthorAndCategory = async (req, res) => {
   }
 };
 
-// Handle article creation on POST
 exports.createArticle = async (req, res) => {
   try {
     const { title, content, author, college } = req.body;
 
-    if (!author) {
+    // Validate required fields
+    if (!title || !content || !author || !college) {
       return res.status(400).json({
         success: false,
-        message: 'Author ID is required',
+        message: 'Title, content, author, and college are required',
       });
     }
 
+    // Check if author and college exist in parallel
+    const [authorExists, collegeExists] = await Promise.all([
+      Author.findById(author),
+      College.findById(college),
+    ]);
+
+    if (!authorExists) {
+      return res.status(404).json({
+        success: false,
+        message: 'Author not found',
+      });
+    }
+
+    if (!collegeExists) {
+      return res.status(404).json({
+        success: false,
+        message: 'College not found',
+      });
+    }
+
+    // Create the article
     const article = new Article({ title, content, author, college });
     await article.save();
+
+    // Update college and author references
+    collegeExists.articles.push(article._id);
+    authorExists.posts.push(article._id);
+
+    // Save college and author updates
+    await Promise.all([collegeExists.save(), authorExists.save()]);
 
     res.status(201).json({
       success: true,
@@ -117,7 +147,11 @@ exports.createArticle = async (req, res) => {
       data: article,
     });
   } catch (error) {
-    handleError(res, error, 'Failed to create article');
+    console.error('Error creating article:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to create article',
+    });
   }
 };
 
@@ -165,5 +199,18 @@ exports.deleteArticle = async (req, res) => {
     });
   } catch (error) {
     handleError(res, error, 'Failed to delete article');
+  }
+};
+
+// delete all articles with their respective authors and colleges
+exports.deleteAllArticles = async (req, res) => {
+  try {
+    await Article.deleteMany();
+    res.status(200).json({
+      success: true,
+      message: 'All articles deleted successfully',
+    });
+  } catch (error) {
+    handleError(res, error, 'Failed to delete all articles');
   }
 };

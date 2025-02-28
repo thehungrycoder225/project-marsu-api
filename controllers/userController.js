@@ -1,8 +1,6 @@
 const Users = require('../models/Users');
 const Colleges = require('../models/Colleges');
 const Articles = require('../models/Articles');
-const bcrypt = require('bcryptjs');
-const mongoose = require('mongoose');
 
 // Display list of all users.
 exports.getUsers = async (req, res) => {
