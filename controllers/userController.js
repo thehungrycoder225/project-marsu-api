@@ -4,6 +4,7 @@ const Articles = require('../models/Articles');
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 
+// Display list of all users.
 exports.getUsers = async (req, res) => {
   try {
     const users = await Users.find();
@@ -19,6 +20,7 @@ exports.getUsers = async (req, res) => {
   }
 };
 
+// Display detail page for a specific user.
 exports.getUser = async (req, res) => {
   try {
     const user = await Users.findById(req.params.id);
@@ -39,6 +41,8 @@ exports.getUser = async (req, res) => {
     });
   }
 };
+
+// Handle user create on POST.
 
 exports.createUser = async (req, res) => {
   try {
@@ -63,6 +67,7 @@ exports.createUser = async (req, res) => {
   }
 };
 
+// Handle user delete on DELETE.
 exports.deleteUser = async (req, res) => {
   const session = await mongoose.startSession();
   session.startTransaction();
@@ -107,6 +112,7 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
+// Handle user update on PUT.
 exports.updateUser = async (req, res) => {
   try {
     const college = await Colleges.findById(req.body.college);

@@ -27,12 +27,7 @@ const userSchema = new mongoose.Schema({
     enum: ['admin', 'user', 'guest'],
     default: 'user',
   },
-  posts: [
-    {
-      ref: 'articles',
-      type: mongoose.Schema.Types.ObjectId,
-    },
-  ],
+  posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'articles' }],
 });
 
 // Encrypt password using bcrypt before saving
